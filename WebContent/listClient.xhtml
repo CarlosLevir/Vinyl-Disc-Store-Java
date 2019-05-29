@@ -35,7 +35,7 @@
 				<h:outputText value="Listagem de Clientes" />
 			</h2>
 		</center>
-		<h:dataTable binding="#{table}" value="#{client.clientsList()}" var="u"
+		<h:dataTable binding="#{table}" value="#{client.clientsList()}" var="client"
 			class="table table-striped table-hover table-bordered">
 			<h:column>
 				<f:facet name="header">ID</f:facet>
@@ -43,25 +43,25 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Nome do Usuário</f:facet>
-				<h:outputText value="#{u.name}" />
+				<h:outputText value="#{client.name}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">Email</f:facet>
-				<h:outputText value="#{u.email}" />
+				<h:outputText value="#{client.email}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">Endereço:</f:facet>
-				<h:outputText value="#{u.address}" />
+				<h:outputText value="#{client.address}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">Editar</f:facet>
-				<h:commandButton action="#{client.edit(u.id)}" value="Atualizar"
+				<h:commandButton action="#{client.edit(client.id)}" value="Atualizar"
 					class="btn btn-primary">
 				</h:commandButton>
 			</h:column>
 			<h:column>
 				<f:facet name="header">Deletar</f:facet>
-				<h:commandButton action="#{client.delete(u.id)}" value="Deletar"
+				<h:commandButton action="#{client.delete(client.id)}" value="Deletar"
 					class="btn btn-danger">
 				</h:commandButton>
 			</h:column>

@@ -15,7 +15,6 @@ public class Client {
 	int id;
 	String name;
 	String email;
-	String gender;
 	String address;
 	ArrayList clientsList;
 	private Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -53,7 +52,6 @@ public class Client {
 		this.address = address;
 	}
 
-// Used to establish connection  
 	public Connection getConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -64,7 +62,6 @@ public class Client {
 		return connection;
 	}
 
-// Used to fetch all records  
 	public ArrayList clientsList() {
 		try {
 			clientsList = new ArrayList();
@@ -86,7 +83,6 @@ public class Client {
 		return clientsList;
 	}
 
-// Used to save client record  
 	public String save() {
 		int result = 0;
 		try {
@@ -107,7 +103,6 @@ public class Client {
 			return "createClient.xhtml?faces-redirect=true";
 	}
 
-// Used to fetch record to update  
 	public String edit(int id) {
 		Client client = null;
 		System.out.println(id);
@@ -129,17 +124,15 @@ public class Client {
 		return "/editClient.xhtml?faces-redirect=true";
 	}
 
-// Used to update client record  
-	public String update(Client u) {
-//int result = 0;  
+	public String update(Client client) {
 		try {
 			connection = getConnection();
 			PreparedStatement stmt = connection
 					.prepareStatement("update clients set name=?,email=?,address=? where id=?");
-			stmt.setString(1, u.getName());
-			stmt.setString(2, u.getEmail());
-			stmt.setString(3, u.getAddress());
-			stmt.setInt(4, u.getId());
+			stmt.setString(1, client.getName());
+			stmt.setString(2, client.getEmail());
+			stmt.setString(3, client.getAddress());
+			stmt.setInt(4, client.getId());
 			stmt.executeUpdate();
 			connection.close();
 		} catch (Exception e) {
@@ -148,7 +141,6 @@ public class Client {
 		return "/listClient.xhtml?faces-redirect=true";
 	}
 
-// Used to delete client record  
 	public void delete(int id) {
 		try {
 			connection = getConnection();
