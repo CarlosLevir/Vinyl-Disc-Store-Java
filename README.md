@@ -1,23 +1,26 @@
-# jsf-crud-exemple
-Exemplo de CRUD JSF 2.2 / MySQL / Bootstrap css
+# Vinyl-Disc-Store-Java
 
-Lembro que no projeto tem que usar a api JSF 2.2.9 e o conector mysql java "mysql-connector-java-5.1.18.jar"
+Exemplo de CRUD JSF 2.2.19 / MySQL / Bootstrap css
+
+Lembro que no projeto tem que usar a api JSF 2.2.9 e o conector mysql java "mysql-connector-java-5.1.47.jar"
 
 Inicie o MySQL
-Use os comandos abaixo para criar o banco e a tabela de usuários.
-Importante não mudar a senha do banco pois o projeto usa o padrão usuário: root e senha: (vazio).
+Use os comandos abaixo para criar o banco e a tabela de clientes.
+## Criação do banco de dados com nome Store
 
-//cria o banco de dados com nome User 
+```sh
+CREATE DATABASE Store;
+```
 
-create database User;
+## Usando o banco Store
 
-//sobe até o banco User
+```sh
+USE Store;
+```
 
-use User;
+## Criação da tabela clientes com os campos nescessários 
 
-//Criação da tabela users com os campos nescessários 
-
-create table users(id int not null primary key auto_increment, name varchar(100), email varchar(50), password varchar(20), gender varchar(1), address text);
+create table clients(id int not null primary key auto_increment, name varchar(100), email varchar(50), address text);
 
 //Conferir se a estrutura da tabela ficou correta.
 
