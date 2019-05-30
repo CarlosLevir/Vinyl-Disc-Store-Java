@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<title>Cadastro de Discos</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+	
+	<style type="text/css">
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		
+		th, td {
+			text-align: left;
+			padding: 8px;
+		}
+		
+		tr:nth-child(even) {
+			background-color: #f2f2f2
+		}
+		
+		th {
+			background-color: #4CAF50;
+			color: white;
+		}
+	</style>
+</h:head>
+<h:body>
+	<h:form id="form" class="form-horizontal">
+		<div class="form-group">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4">
+				<h2 style="text-align: center">Cadastro de Discos</h2>
+			</div>
+		</div>
+		<hr />
+		<div class="form-group">
+			<h:outputLabel for="vinylname" class="control-label col-sm-4">Nome do disco</h:outputLabel>
+			<div class="col-sm-4">
+				<h:inputText id="name-id" value="#{vinyl.name}" class="form-control"
+					validatorMessage="Nome do disco é obrigatório">
+					<f:validateRequired />
+				</h:inputText>
+			</div>
+		</div>
+		<div class="form-group">
+			<h:outputLabel for="price" class="control-label col-sm-4">Preço do disco</h:outputLabel>
+			<div class="col-sm-4">
+				<h:inputText id="price-id" value="#{vinyl.price}"
+					class="form-control" validatorMessage="Preço do disco é obrigatório">
+					<f:validateRequired />
+				</h:inputText>
+			</div>
+		</div>
+		<div class="form-group">
+			<h:outputLabel for="singer" class="control-label col-sm-4">Cantor</h:outputLabel>
+			<div class="col-sm-4">
+				<h:inputText value="#{vinyl.singer}" cols="50" rows="5"
+					class="form-control" validatorMessage="Nome do cantor é obrigatório">
+					<f:validateRequired />
+				</h:inputText>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4">
+				<div class="col-sm-2">
+					<h:commandButton value="Salvar" action="#{vinyl.save()}"
+						class="btn btn-success" style="width: 80px;"></h:commandButton>
+				</div>
+				<div class="col-sm-1"></div>
+				<div class="col-sm-2">
+					<h:link outcome="listClient" value="Ver lista de discos"
+						class="btn btn-primary" />
+				</div>
+			</div>
+		</div>
+	</h:form>
+</h:body>
+</html>

@@ -4,7 +4,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-	<title>Edição dos Dados do Cliente</title>
+	<title>Edição dos Dados do Disco</title>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 	
 	<style type="text/css">
@@ -32,27 +32,27 @@
 	<h:form id="form" class="form-horizontal">
 		<div class="form-group">
 			<div class="col-sm-2"></div>
-			<h2 style="text-align: center" class="col-sm-4">Edição dos Dados do Cliente</h2>
+			<h2 style="text-align: center" class="col-sm-4">Edição dos Dados do Disco</h2>
 		</div>
 		<hr />
 		<div class="form-group">
-			<h:outputLabel for="name" class="control-label col-sm-2">Nome do cliente</h:outputLabel>
+			<h:outputLabel for="name" class="control-label col-sm-2">Nome do disco</h:outputLabel>
 			<div class="col-sm-4">
-				<h:inputText id="name-id" value="#{editClient.name}"
+				<h:inputText id="name-id" value="#{editVinyl.name}"
 					class="form-control" />
 			</div>
 		</div>
 		<div class="form-group">
-			<h:outputLabel for="email" class="control-label col-sm-2">Email do cliente</h:outputLabel>
+			<h:outputLabel for="price" class="control-label col-sm-2">Preço disco</h:outputLabel>
 			<div class="col-sm-4">
-				<h:inputText id="email-id" value="#{editClient.email}"
+				<h:inputText id="price-id" value="#{editVinyl.price}"
 					class="form-control" />
 			</div>
 		</div>
 		<div class="form-group">
-			<h:outputLabel for="address" class="control-label col-sm-2">Endereço:</h:outputLabel>
+			<h:outputLabel for="singer" class="control-label col-sm-2">Cantor do disco</h:outputLabel>
 			<div class="col-sm-4">
-				<h:inputTextarea value="#{editClient.address}" cols="50" rows="5"
+				<h:inputText id="singer-id" value="#{editVinyl.singer}" cols="50" rows="5"
 					class="form-control" />
 			</div>
 		</div>
@@ -60,7 +60,7 @@
 			<div class="col-sm-2"></div>
 			<div class="col-sm-4">
 				<center>
-					<h:commandButton value="Atualizar" action="#{client.update(editClient)}"
+					<h:commandButton value="Atualizar" action="#{vinyl.update(editVinyl)}"
 						class="btn btn-primary" style="width: 80px;"></h:commandButton>
 				</center>
 			</div>
