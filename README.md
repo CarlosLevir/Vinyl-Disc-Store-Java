@@ -1,33 +1,30 @@
 # Vinyl-Disc-Store-Java
 
-Exemplo de CRUD JSF 2.2.19 / MySQL / Bootstrap css
+- [Vinyl-Disc-Store-Java](#vinyl-disc-store-java)
+  - [Instalação](#instalação)
+    - [Criação do banco de dados com nome store](#criação-do-banco-de-dados-com-nome-store)
+    - [Criação das tabelas no banco store](#criação-das-tabelas-no-banco-store)
+    - [Conectando ao banco de dados](#conectando-ao-banco-de-dados)
 
-Lembro que no projeto tem que usar a api JSF 2.2.9 e o conector mysql java "mysql-connector-java-5.1.47.jar"
+CRUD de uma loja de discos de vinil, utilizando JAVA, JSF, MySQL, JDBC e BOOTSTRAP.
 
-Inicie o MySQL
-Use os comandos abaixo para criar o banco e a tabela de clientes.
-## Criação do banco de dados com nome Store
+## Instalação
+
+Use os comandos abaixo para montar o ambiente.
+
+### Criação do banco de dados com nome store
 
 ```sh
-CREATE DATABASE Store;
+CREATE DATABASE store;
 ```
 
-## Usando o banco Store
+### Criação das tabelas no banco store
 
-```sh
-USE Store;
-```
+Para criar as tabelas, utilize o arquivo `Dump20190602.sql` deixado na raiz do projeto, através do import que o SGBD oferece.
 
-## Criação da tabela clientes com os campos nescessários 
+### Conectando ao banco de dados
 
-create table clients(id int not null primary key auto_increment, name varchar(100), email varchar(50), address text);
+Para conectar ao banco, é necessário alterar o usuário e senhas no arquivo `ConnectionBean.java`, que pode ser encontrado dentro da pasta `src`.  
+Na linha 14, mude o `user` e `password` para o usuário e senha do seu banco.
 
-//Conferir se a estrutura da tabela ficou correta.
-
- # Nome	            Tipo	    Agrupamento (Collation)	Atributos	Nulo	Predefinido	Comentários
-	1	idPrimária	  int(11)			  Não	None		      AUTO_INCREMENT	 Muda Muda	 Elimina Elimina	
-	2	name	        varchar(100)	latin1_swedish_ci		Sim	NULL			 Muda Muda	 Elimina Elimina	
-	3	email	        varchar(50)	  latin1_swedish_ci		Sim	NULL			 Muda Muda	 Elimina Elimina	
-	4	password	    varchar(20)	  latin1_swedish_ci		Sim	NULL			 Muda Muda	 Elimina Elimina	
-	5	gender	      varchar(1)	  latin1_swedish_ci		Sim	NULL			 Muda Muda	 Elimina Elimina	
-	6	address	      text	        latin1_swedish_ci		Sim	NULL			 Muda Muda	 Elimina Elimina	
+Atenção: É recomendado que o usuário escolhido possua todos os privilégios concedidos, para evitar eventuais problemas.
