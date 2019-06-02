@@ -5,66 +5,74 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
 	<title>Edição dos Dados do Cliente</title>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+	<h:outputStylesheet name="bootstrap.min.css"/>
 	
 	<style type="text/css">
-		table {
-			border-collapse: collapse;
-			width: 100%;
-		}
-		
-		th, td {
-			text-align: left;
-			padding: 8px;
-		}
-		
-		tr:nth-child(even) {
-			background-color: #f2f2f2
-		}
-		
-		th {
-			background-color: #4CAF50;
-			color: white;
+		.atualizar {
+			margin-top: 10px;
 		}
 	</style>
 </h:head>
 <h:body>
+	<nav class="navbar navbar-expand-lg navbar-light">
+	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	    <div class="navbar-nav">
+	      <a class="nav-item nav-link" href="./listVinyl.xhtml">Listagem de Discos</a>
+	      <a class="nav-item nav-link" href="./createVinyl.xhtml">Cadastro de Discos</a>
+	      <a class="nav-item nav-link active" href="./listClient.xhtml">Listagem de Clientes</a>
+	      <a class="nav-item nav-link" href="./createClient.xhtml">Cadastro de Clientes</a>
+	      <a class="nav-item nav-link" href="./listSale.xhtml">Histórico de Vendas</a>
+	    </div>
+	  </div>
+	</nav>
+
 	<h:form id="form" class="form-horizontal">
-		<div class="form-group">
-			<div class="col-sm-2"></div>
-			<h2 style="text-align: center" class="col-sm-4">Edição dos Dados do Cliente</h2>
-		</div>
-		<hr />
-		<div class="form-group">
-			<h:outputLabel for="name" class="control-label col-sm-2">Nome do cliente</h:outputLabel>
-			<div class="col-sm-4">
-				<h:inputText id="name-id" value="#{editClient.name}"
-					class="form-control" />
+		<center>
+			<div class="form-group">
+				<div class="col-sm-2"></div>
+				<h2 style="text-align: center" class="col-sm-4">Edição dos Dados do Cliente</h2>
 			</div>
-		</div>
-		<div class="form-group">
-			<h:outputLabel for="email" class="control-label col-sm-2">Email do cliente</h:outputLabel>
-			<div class="col-sm-4">
-				<h:inputText id="email-id" value="#{editClient.email}"
-					class="form-control" />
+			<hr />
+			<div class="form-group">
+				<h:outputLabel for="name-edit-client" class="control-label col-sm-2">Nome do cliente</h:outputLabel>
+				<div class="col-sm-4">
+					<h:inputText id="name-edit-client" value="#{editClient.name}"
+						class="form-control" required="true">
+						<f:validateRequired />
+					</h:inputText>
+					<h:message for="name-edit-client" style="color:red" />
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<h:outputLabel for="address" class="control-label col-sm-2">Endereço:</h:outputLabel>
-			<div class="col-sm-4">
-				<h:inputTextarea value="#{editClient.address}" cols="50" rows="5"
-					class="form-control" />
+			<div class="form-group">
+				<h:outputLabel for="email-edit-client" class="control-label col-sm-2">Email do cliente</h:outputLabel>
+				<div class="col-sm-4">
+					<h:inputText id="email-edit-client" value="#{editClient.email}"
+						class="form-control" required="true">
+						<f:validateRequired />
+					</h:inputText>
+					<h:message for="name-edit-client" style="color:red" />
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-sm-2"></div>
-			<div class="col-sm-4">
-				<center>
-					<h:commandButton value="Atualizar" action="#{client.update(editClient)}"
-						class="btn btn-primary" style="width: 80px;"></h:commandButton>
-				</center>
+			<div class="form-group">
+				<h:outputLabel for="address-edit-client" class="control-label col-sm-2">Endereço:</h:outputLabel>
+				<div class="col-sm-4">
+					<h:inputTextarea id="address-edit-client" value="#{editClient.address}" cols="50" rows="5"
+						class="form-control" required="true">
+						<f:validateRequired />
+					</h:inputTextarea>
+					<h:message for="address-edit-client" style="color:red" />
+				</div>
 			</div>
-		</div>
+			<div class="form-group">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-4">
+					<center>
+						<h:commandButton value="Atualizar" action="#{client.update(editClient)}"
+							class="btn btn-primary atualizar"></h:commandButton>
+					</center>
+				</div>
+			</div>
+		</center>
 	</h:form>
 </h:body>
 </html>

@@ -4,7 +4,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-	<title>Edição dos Dados do Disco</title>
+	<title>Venda de Disco</title>
 	<h:outputStylesheet name="bootstrap.min.css"/>
 	
 	<style type="text/css">
@@ -30,45 +30,56 @@
 		<center>
 			<div class="form-group">
 				<div class="col-sm-2"></div>
-				<h2 style="text-align: center" class="col-sm-4">Edição dos Dados do Disco</h2>
+				<h2 style="text-align: center" class="col-sm-4">Venda de Disco</h2>
 			</div>
 			<hr />
 			<div class="form-group">
-				<h:outputLabel for="name-edit-vinyl" class="control-label col-sm-2">Nome do disco</h:outputLabel>
+				<h:outputLabel for="name-sale" class="control-label col-sm-2">Nome do disco</h:outputLabel>
 				<div class="col-sm-4">
-					<h:inputText id="name-edit-vinyl" value="#{editVinyl.name}"
-						class="form-control" required="true">
-						<f:validateRequired />
-					</h:inputText>
-					<h:message for="name-edit-vinyl" style="color:red" />
+					<h:inputText id="name-sale" value="#{editSell.name}"
+						class="form-control" disabled="true" required="true">
+					<f:validateRequired />
+				</h:inputText>
+					<h:message for="name-sale" style="color:red" />
 				</div>
 			</div>
 			<div class="form-group">
-				<h:outputLabel for="price-edit-vinyl" class="control-label col-sm-2">Preço do disco</h:outputLabel>
+				<h:outputLabel for="price-sale" class="control-label col-sm-2">Preço do disco (R$)</h:outputLabel>
 				<div class="col-sm-4">
-					<h:inputText id="price-edit-vinyl" value="#{editVinyl.price}"
-						class="form-control" required="true">
+					<h:inputText id="price-sale" value="#{editSell.price}"
+						class="form-control" disabled="true" required="true">
 						<f:validateRequired />
 					</h:inputText>
-					<h:message for="price-edit-vinyl" style="color:red" />
+					<h:message for="price-sale" style="color:red" />
 				</div>
 			</div>
 			<div class="form-group">
-				<h:outputLabel for="singer-edit-vinyl" class="control-label col-sm-2">Cantor do disco</h:outputLabel>
+				<h:outputLabel for="singer-sale" class="control-label col-sm-2">Cantor do disco</h:outputLabel>
 				<div class="col-sm-4">
-					<h:inputText id="singer-edit-vinyl" value="#{editVinyl.singer}"
-						class="form-control" required="true">
+					<h:inputText id="singer-sale" value="#{editSell.singer}"
+						class="form-control" disabled="true" required="true">
 						<f:validateRequired />
 					</h:inputText>
-					<h:message for="singer-edit-vinyl" style="color:red" />
+					<h:message for="singer-sale" style="color:red" />
+				</div>
+			</div>
+			<div class="form-group">
+				<h:outputLabel for="client-sale" class="control-label col-sm-2">Nome do cliente</h:outputLabel>
+				<div class="col-sm-4">
+					<h:selectOneMenu id="client-sale" style="width: 400px;" value="#{editSell.client}">
+						<f:selectItems  value="#{client.clientsList()}" var="client"
+							itemLabel="#{client.name}" itemValue="#{client.name}" validatorMessage="Cliente inválido" required="true" />
+						<f:validateRequired />
+					</h:selectOneMenu>
+					<h:message for="client-sale" style="color:red" />
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-2"></div>
 				<div class="col-sm-4">
 					<center>
-						<h:commandButton value="Atualizar" action="#{vinyl.update(editVinyl)}"
-							class="btn btn-primary atualizar"></h:commandButton>
+						<h:commandButton value="Vender" action="#{vinyl.sell(editSell)}"
+							class="btn btn-success atualizar"></h:commandButton>
 					</center>
 				</div>
 			</div>

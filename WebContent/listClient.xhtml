@@ -5,7 +5,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
 	<title>Listagem de Clientes</title>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+	<h:outputStylesheet name="bootstrap.min.css"/>
 	
 	<style type="text/css">
 		table {
@@ -14,7 +14,7 @@
 		}
 		
 		th, td {
-			text-align: left;
+			text-align: center;
 			padding: 8px;
 		}
 		
@@ -23,12 +23,24 @@
 		}
 		
 		th {
-			background-color: #4CAF50;
+			background-color: #341f97;
 			color: white;
 		}
 	</style>
 </h:head>
 <h:body>
+	<nav class="navbar navbar-expand-lg navbar-light">
+	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	    <div class="navbar-nav">
+	      <a class="nav-item nav-link" href="./listVinyl.xhtml">Listagem de Discos</a>
+	      <a class="nav-item nav-link" href="./createVinyl.xhtml">Cadastro de Discos</a>
+	      <a class="nav-item nav-link active" href="./listClient.xhtml">Listagem de Clientes</a>
+	      <a class="nav-item nav-link" href="./createClient.xhtml">Cadastro de Clientes</a>
+	      <a class="nav-item nav-link" href="./listSale.xhtml">Histórico de Vendas</a>
+	    </div>
+	  </div>
+	</nav>
+
 	<h:form>
 		<center>
 			<h2>
@@ -50,7 +62,7 @@
 				<h:outputText value="#{client.email}" />
 			</h:column>
 			<h:column>
-				<f:facet name="header">Endereço:</f:facet>
+				<f:facet name="header">Endereço</f:facet>
 				<h:outputText value="#{client.address}" />
 			</h:column>
 			<h:column>

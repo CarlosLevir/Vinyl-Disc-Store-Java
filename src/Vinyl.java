@@ -1,9 +1,12 @@
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -14,9 +17,16 @@ import javax.faces.context.FacesContext;
 public class Vinyl {
 	int id;
 	String name;
-	String price;
+	int price;
 	String singer;
-	ArrayList vinylsList;
+	String client;
+	ArrayList<Vinyl> vinylsList;
+	
+	DateTimeFormatter formatter =
+		    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+		                     .withLocale(Locale.US)
+		                     .withZone(ZoneId.systemDefault());
+
 	private Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 	Connection connection;
 
@@ -36,11 +46,11 @@ public class Vinyl {
 		this.name = name;
 	}
 
-	public String getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 
@@ -51,20 +61,26 @@ public class Vinyl {
 	public void setSinger(String singer) {
 		this.singer = singer;
 	}
-
-	public Connection getConnection() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/store", "docker", "docker");
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return connection;
+	
+	public String getClient() {
+		return client;
 	}
 
-	public ArrayList vinylsList() {
+	public void setClient(String client) {
+		this.client = client;
+	}
+	
+	public String getNow() {
+		return formatter.format(Instant.now());
+	}
+
+	public Connection getConnection() {
+		return ConnectionBean.getConnection();
+	}
+
+	public ArrayList<Vinyl> vinylsList() {
 		try {
-			vinylsList = new ArrayList();
+			vinylsList = new ArrayList<Vinyl>();
 			connection = getConnection();
 			Statement stmt = getConnection().createStatement();
 			ResultSet rs = stmt.executeQuery("select * from vinyls");
@@ -72,7 +88,7 @@ public class Vinyl {
 				Vinyl vinyl = new Vinyl();
 				vinyl.setId(rs.getInt("id"));
 				vinyl.setName(rs.getString("name"));
-				vinyl.setPrice(rs.getString("price"));
+				vinyl.setPrice(rs.getInt("price"));
 				vinyl.setSinger(rs.getString("singer"));
 				vinylsList.add(vinyl);
 			}
@@ -90,7 +106,7 @@ public class Vinyl {
 			PreparedStatement stmt = connection
 					.prepareStatement("insert into vinyls(name,price,singer) values(?,?,?)");
 			stmt.setString(1, name);
-			stmt.setString(2, price);
+			stmt.setInt(2, price);
 			stmt.setString(3, singer);
 			result = stmt.executeUpdate();
 			connection.close();
@@ -105,7 +121,6 @@ public class Vinyl {
 
 	public String edit(int id) {
 		Vinyl vinyl = null;
-		System.out.println(id);
 		try {
 			connection = getConnection();
 			Statement stmt = getConnection().createStatement();
@@ -114,7 +129,7 @@ public class Vinyl {
 			vinyl = new Vinyl();
 			vinyl.setId(rs.getInt("id"));
 			vinyl.setName(rs.getString("name"));
-			vinyl.setPrice(rs.getString("price"));
+			vinyl.setPrice(rs.getInt("price"));
 			vinyl.setSinger(rs.getString("singer"));
 			sessionMap.put("editVinyl", vinyl);
 			connection.close();
@@ -123,14 +138,13 @@ public class Vinyl {
 		}
 		return "/editVinyl.xhtml?faces-redirect=true";
 	}
-
+	
 	public String update(Vinyl vinyl) {
 		try {
 			connection = getConnection();
-			PreparedStatement stmt = connection
-					.prepareStatement("update vinyls set name=?,price=?,singer=? where id=?");
+			PreparedStatement stmt = connection.prepareStatement("update vinyls set name=?,price=?,singer=? where id=?");
 			stmt.setString(1, vinyl.getName());
-			stmt.setString(2, vinyl.getPrice());
+			stmt.setInt(2, vinyl.getPrice());
 			stmt.setString(3, vinyl.getSinger());
 			stmt.setInt(4, vinyl.getId());
 			stmt.executeUpdate();
@@ -139,6 +153,44 @@ public class Vinyl {
 			System.out.println();
 		}
 		return "/listVinyl.xhtml?faces-redirect=true";
+	}
+	
+	public String editSell(int id) {
+		Vinyl vinyl = null;
+		try {
+			connection = getConnection();
+			Statement stmt = getConnection().createStatement();
+			ResultSet rs = stmt.executeQuery("select * from vinyls where id = " + (id));
+			rs.next();
+			vinyl = new Vinyl();
+			vinyl.setId(rs.getInt("id"));
+			vinyl.setName(rs.getString("name"));
+			vinyl.setPrice(rs.getInt("price"));
+			vinyl.setSinger(rs.getString("singer"));
+			sessionMap.put("editSell", vinyl);
+			connection.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "/createSale.xhtml?faces-redirect=true";
+	}
+	
+	public String sell(Vinyl vinyl) {
+		try {
+			Sale sale = new Sale();
+			sale.setVinyl(vinyl.getName());
+			sale.setClient(vinyl.getClient());
+			sale.setPrice(vinyl.getPrice());
+			sale.setDate(vinyl.getNow());
+			sale.save();
+
+			connection = getConnection();
+			PreparedStatement stmt = connection.prepareStatement("delete from vinyls where id = " + vinyl.getId());
+			stmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "/listSale.xhtml?faces-redirect=true";
 	}
 
 	public void delete(int id) {

@@ -4,7 +4,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-	<title>Listagem de Discos</title>
+	<title>Histórico de Vendas</title>
 	<h:outputStylesheet name="bootstrap.min.css"/>
 	
 	<style type="text/css">
@@ -32,11 +32,11 @@
 	<nav class="navbar navbar-expand-lg navbar-light">
 	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 	    <div class="navbar-nav">
-	      <a class="nav-item nav-link active" href="./listVinyl.xhtml">Listagem de Discos</a>
+	      <a class="nav-item nav-link" href="./listVinyl.xhtml">Listagem de Discos</a>
 	      <a class="nav-item nav-link" href="./createVinyl.xhtml">Cadastro de Discos</a>
 	      <a class="nav-item nav-link" href="./listClient.xhtml">Listagem de Clientes</a>
 	      <a class="nav-item nav-link" href="./createClient.xhtml">Cadastro de Clientes</a>
-	      <a class="nav-item nav-link" href="./listSale.xhtml">Histórico de Vendas</a>
+	      <a class="nav-item nav-link active" href="./listSale.xhtml">Histórico de Vendas</a>
 	    </div>
 	  </div>
 	</nav>
@@ -44,10 +44,10 @@
 	<h:form>
 		<center>
 			<h2>
-				<h:outputText value="Listagem de Discos" />
+				<h:outputText value="Histórico de Vendas" />
 			</h2>
 		</center>
-		<h:dataTable binding="#{table}" value="#{vinyl.vinylsList()}" var="vinyl"
+		<h:dataTable binding="#{table}" value="#{sale.salesList()}" var="sale"
 			class="table table-striped table-hover table-bordered">
 			<h:column>
 				<f:facet name="header">ID</f:facet>
@@ -55,38 +55,36 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Nome do Disco</f:facet>
-				<h:outputText value="#{vinyl.name}" />
+				<h:outputText value="#{sale.vinyl}" />
 			</h:column>
 			<h:column>
-				<f:facet name="header">Cantor</f:facet>
-				<h:outputText value="#{vinyl.singer}" />
+				<f:facet name="header">Comprador</f:facet>
+				<h:outputText value="#{sale.client}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">Preço (R$)</f:facet>
-				<h:outputText value="#{vinyl.price}" />
+				<h:outputText value="#{sale.price}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Data da venda</f:facet>
+				<h:outputText value="#{sale.date}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">Editar</f:facet>
-				<h:commandButton action="#{vinyl.edit(vinyl.id)}" value="Atualizar"
+				<h:commandButton action="#{sale.edit(sale.id)}" value="Atualizar"
 					class="btn btn-primary">
 				</h:commandButton>
 			</h:column>
 			<h:column>
-				<f:facet name="header">Vender</f:facet>
-				<h:commandButton action="#{vinyl.editSell(vinyl.id)}" value="Vender"
-					class="btn btn-success">
-				</h:commandButton>
-			</h:column>
-			<h:column>
 				<f:facet name="header">Deletar</f:facet>
-				<h:commandButton action="#{vinyl.delete(vinyl.id)}" value="Deletar"
+				<h:commandButton action="#{sale.delete(sale.id)}" value="Deletar"
 					class="btn btn-danger">
 				</h:commandButton>
 			</h:column>
 		</h:dataTable>
 		<center>
-			<h:commandButton action="createVinyl.xhtml?faces-redirect=true"
-				value="Cadastrar novo disco" class="btn btn-success"></h:commandButton>
+			<h:commandButton action="listVinyl.xhtml?faces-redirect=true"
+				value="Ver lista de discos" class="btn btn-success"></h:commandButton>
 		</center>
 	</h:form>
 </h:body>

@@ -1,5 +1,4 @@
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -16,7 +15,7 @@ public class Client {
 	String name;
 	String email;
 	String address;
-	ArrayList clientsList;
+	ArrayList<Client> clientsList;
 	private Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 	Connection connection;
 
@@ -53,18 +52,12 @@ public class Client {
 	}
 
 	public Connection getConnection() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/store", "docker", "docker");
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return connection;
+		return ConnectionBean.getConnection();
 	}
 
-	public ArrayList clientsList() {
+	public ArrayList<Client> clientsList() {
 		try {
-			clientsList = new ArrayList();
+			clientsList = new ArrayList<Client>();
 			connection = getConnection();
 			Statement stmt = getConnection().createStatement();
 			ResultSet rs = stmt.executeQuery("select * from clients");
@@ -105,7 +98,6 @@ public class Client {
 
 	public String edit(int id) {
 		Client client = null;
-		System.out.println(id);
 		try {
 			connection = getConnection();
 			Statement stmt = getConnection().createStatement();
@@ -127,8 +119,7 @@ public class Client {
 	public String update(Client client) {
 		try {
 			connection = getConnection();
-			PreparedStatement stmt = connection
-					.prepareStatement("update clients set name=?,email=?,address=? where id=?");
+			PreparedStatement stmt = connection.prepareStatement("update clients set name=?,email=?,address=? where id=?");
 			stmt.setString(1, client.getName());
 			stmt.setString(2, client.getEmail());
 			stmt.setString(3, client.getAddress());

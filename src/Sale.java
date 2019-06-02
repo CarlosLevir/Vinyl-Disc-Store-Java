@@ -1,5 +1,4 @@
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -11,12 +10,13 @@ import javax.faces.context.FacesContext;
 
 @ManagedBean
 @RequestScoped
-public class Client {
+public class Sale {
 	int id;
 	String vinyl;
+	int price;
 	String client;
 	String date;
-	ArrayList clientsList;
+	ArrayList<Sale> salesList;
 	private Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 	Connection connection;
 
@@ -44,6 +44,14 @@ public class Client {
 		this.client = client;
 	}
 
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	
 	public String getDate() {
 		return date;
 	}
@@ -53,98 +61,89 @@ public class Client {
 	}
 
 	public Connection getConnection() {
-		try {
-			Class.forVinyl("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/store", "docker", "docker");
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return connection;
+		return ConnectionBean.getConnection();
 	}
 
-	public ArrayList clientsList() {
+	public ArrayList<Sale> salesList() {
 		try {
-			clientsList = new ArrayList();
+			salesList = new ArrayList<Sale>();
 			connection = getConnection();
 			Statement stmt = getConnection().createStatement();
-			ResultSet rs = stmt.executeQuery("select * from clients");
+			ResultSet rs = stmt.executeQuery("select * from sales order by id desc ");
 			while (rs.next()) {
-				Client client = new Client();
-				client.setId(rs.getInt("id"));
-				client.setVinyl(rs.getString("vinyl"));
-				client.setClient(rs.getString("client"));
-				client.setDate(rs.getString("date"));
-				clientsList.add(client);
+				Sale sale = new Sale();
+				sale.setId(rs.getInt("id"));
+				sale.setVinyl(rs.getString("vinyl"));
+				sale.setClient(rs.getString("client"));
+				sale.setPrice(rs.getInt("price"));
+				sale.setDate(rs.getString("date"));
+				salesList.add(sale);
 			}
 			connection.close();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return clientsList;
+		return salesList;
 	}
 
-	public String save() {
-		int result = 0;
+	public void save() {
 		try {
 			connection = getConnection();
 			PreparedStatement stmt = connection
-					.prepareStatement("insert into clients(vinyl,client,date) values(?,?,?)");
+					.prepareStatement("insert into sales(vinyl,client,price,date) values(?,?,?,?)");
 			stmt.setString(1, vinyl);
 			stmt.setString(2, client);
-			stmt.setString(3, date);
-			result = stmt.executeUpdate();
+			stmt.setInt(3, price);
+			stmt.setString(4, date);
+			stmt.executeUpdate();
 			connection.close();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		if (result != 0)
-			return "listClient.xhtml?faces-redirect=true";
-		else
-			return "createClient.xhtml?faces-redirect=true";
 	}
 
 	public String edit(int id) {
-		Client client = null;
-		System.out.println(id);
+		Sale sale = null;
 		try {
 			connection = getConnection();
 			Statement stmt = getConnection().createStatement();
-			ResultSet rs = stmt.executeQuery("select * from clients where id = " + (id));
+			ResultSet rs = stmt.executeQuery("select * from sales where id = " + (id));
 			rs.next();
-			client = new Client();
-			client.setId(rs.getInt("id"));
-			client.setVinyl(rs.getString("vinyl"));
-			client.setClient(rs.getString("client"));
-			client.setDate(rs.getString("date"));
-			sessionMap.put("editClient", client);
+			sale = new Sale();
+			sale.setId(rs.getInt("id"));
+			sale.setVinyl(rs.getString("vinyl"));
+			sale.setClient(rs.getString("client"));
+			sale.setPrice(rs.getInt("price"));
+			sale.setDate(rs.getString("date"));
+			sessionMap.put("editSale", sale);
 			connection.close();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return "/editClient.xhtml?faces-redirect=true";
+		return "/editSale.xhtml?faces-redirect=true";
 	}
 
-	public String update(Client client) {
+	public String update(Sale sale) {
 		try {
 			connection = getConnection();
 			PreparedStatement stmt = connection
-					.prepareStatement("update clients set vinyl=?,client=?,date=? where id=?");
-			stmt.setString(1, client.getVinyl());
-			stmt.setString(2, client.getClient());
-			stmt.setString(3, client.getDate());
-			stmt.setInt(4, client.getId());
+					.prepareStatement("update sales set vinyl=?,client=?,price=? where id=?");
+			stmt.setString(1, sale.getVinyl());
+			stmt.setString(2, sale.getClient());
+			stmt.setInt(3, sale.getPrice());
+			stmt.setInt(4, sale.getId());
 			stmt.executeUpdate();
 			connection.close();
 		} catch (Exception e) {
 			System.out.println();
 		}
-		return "/listClient.xhtml?faces-redirect=true";
+		return "/listSale.xhtml?faces-redirect=true";
 	}
 
 	public void delete(int id) {
 		try {
 			connection = getConnection();
-			PreparedStatement stmt = connection.prepareStatement("delete from clients where id = " + id);
+			PreparedStatement stmt = connection.prepareStatement("delete from sales where id = " + id);
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e);

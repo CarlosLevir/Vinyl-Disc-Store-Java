@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="jsf-crud-exemple">
+    <wb-module deploy-name="Vinyl-Disc-Store">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="jsf-crud-exemple"/>
-        <property name="java-output-path" value="/jsf-crud-exemple/build/classes"/>
+        <property name="context-root" value="Vinyl-Disc-Store"/>
+        <property name="java-output-path" value="/Vinyl-Disc-Store/build/classes"/>
     </wb-module>
 </project-modules>

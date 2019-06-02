@@ -5,79 +5,82 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
 	<title>Cadastro de Discos</title>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+	<h:outputStylesheet name="bootstrap.min.css"/>
 	
 	<style type="text/css">
-		table {
-			border-collapse: collapse;
-			width: 100%;
-		}
-		
-		th, td {
-			text-align: left;
-			padding: 8px;
-		}
-		
-		tr:nth-child(even) {
-			background-color: #f2f2f2
-		}
-		
-		th {
-			background-color: #4CAF50;
-			color: white;
+		.ver-lista {
+			margin-top: 10px;
 		}
 	</style>
 </h:head>
 <h:body>
+	<nav class="navbar navbar-expand-lg navbar-light">
+	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	    <div class="navbar-nav">
+	      <a class="nav-item nav-link" href="./listVinyl.xhtml">Listagem de Discos</a>
+	      <a class="nav-item nav-link active" href="./createVinyl.xhtml">Cadastro de Discos</a>
+	      <a class="nav-item nav-link" href="./listClient.xhtml">Listagem de Clientes</a>
+	      <a class="nav-item nav-link" href="./createClient.xhtml">Cadastro de Clientes</a>
+	      <a class="nav-item nav-link" href="./listSale.xhtml">Histórico de Vendas</a>
+	    </div>
+	  </div>
+	</nav>
+
 	<h:form id="form" class="form-horizontal">
-		<div class="form-group">
-			<div class="col-sm-4"></div>
-			<div class="col-sm-4">
-				<h2 style="text-align: center">Cadastro de Discos</h2>
-			</div>
-		</div>
-		<hr />
-		<div class="form-group">
-			<h:outputLabel for="vinylname" class="control-label col-sm-4">Nome do disco</h:outputLabel>
-			<div class="col-sm-4">
-				<h:inputText id="name-id" value="#{vinyl.name}" class="form-control"
-					validatorMessage="Nome do disco é obrigatório">
-					<f:validateRequired />
-				</h:inputText>
-			</div>
-		</div>
-		<div class="form-group">
-			<h:outputLabel for="price" class="control-label col-sm-4">Preço do disco</h:outputLabel>
-			<div class="col-sm-4">
-				<h:inputText id="price-id" value="#{vinyl.price}"
-					class="form-control" validatorMessage="Preço do disco é obrigatório">
-					<f:validateRequired />
-				</h:inputText>
-			</div>
-		</div>
-		<div class="form-group">
-			<h:outputLabel for="singer" class="control-label col-sm-4">Cantor</h:outputLabel>
-			<div class="col-sm-4">
-				<h:inputText value="#{vinyl.singer}" cols="50" rows="5"
-					class="form-control" validatorMessage="Nome do cantor é obrigatório">
-					<f:validateRequired />
-				</h:inputText>
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-sm-4"></div>
-			<div class="col-sm-4">
-				<div class="col-sm-2">
-					<h:commandButton value="Salvar" action="#{vinyl.save()}"
-						class="btn btn-success" style="width: 80px;"></h:commandButton>
-				</div>
-				<div class="col-sm-1"></div>
-				<div class="col-sm-2">
-					<h:link outcome="listClient" value="Ver lista de discos"
-						class="btn btn-primary" />
+		<center>
+			<div class="form-group">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-4">
+					<h2 style="text-align: center">Cadastro de Discos</h2>
 				</div>
 			</div>
-		</div>
+			<hr />
+			<div class="form-group">
+				<h:outputLabel for="name-vinyl" class="control-label col-sm-4">Nome do disco</h:outputLabel>
+				<div class="col-sm-4">
+					<h:inputText id="name-vinyl" value="#{vinyl.name}" class="form-control"
+						validatorMessage="Nome do disco é obrigatório" required="true">
+						<f:validateRequired />
+					</h:inputText>
+					<h:message for="name-vinyl" style="color:red" />
+				</div>
+			</div>
+			<div class="form-group">
+				<h:outputLabel for="price-vinyl" class="control-label col-sm-4">Preço do disco (R$)</h:outputLabel>
+				<div class="col-sm-4">
+					<h:inputText id="price-vinyl" value="#{vinyl.price}"
+						class="form-control" validatorMessage="Preço do disco é obrigatório" required="true">
+						<f:validateRequired />
+						<f:convertNumber longOnly="true"/>
+					</h:inputText>
+					<h:message for="price-vinyl" style="color:red" />
+				</div>
+			</div>
+			<div class="form-group">
+				<h:outputLabel for="singer-vinyl" class="control-label col-sm-4">Cantor</h:outputLabel>
+				<div class="col-sm-4">
+					<h:inputText id="singer-vinyl" value="#{vinyl.singer}"
+						class="form-control" validatorMessage="Nome do cantor é obrigatório" required="true">
+						<f:validateRequired />
+					</h:inputText>
+					<h:message for="singer-vinyl" style="color:red" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-4">
+					<div class="col-sm-12">
+						<h:commandButton value="Salvar" action="#{vinyl.save()}"
+							class="btn btn-success" style="width: 80px;"></h:commandButton>
+					</div>
+					<div class="col-sm-1"></div>
+					<div class="col-sm-12">
+						<h:link outcome="listVinyl" value="Ver lista de discos"
+							class="btn btn-primary ver-lista" />
+					</div>
+				</div>
+			</div>
+		</center>
 	</h:form>
 </h:body>
 </html>
