@@ -12,7 +12,7 @@ CRUD de uma loja de discos de vinil, utilizando JAVA, JSF, MySQL, JDBC e BOOTSTR
 
 Use os comandos abaixo para montar o ambiente.
 
-### Criação do banco de dados com nome store
+### Criação do banco de dados com o nome store
 
 ```sh
 CREATE DATABASE store;
